@@ -10,6 +10,7 @@ import { AiTutorProvider } from '@/lib/context/ai-tutor-context';
 import { MessagesProvider } from '@/lib/context/messages-context';
 import { AiTutorWidget } from '@/components/ai-tutor/ai-tutor-widget';
 import { SplashScreen } from '@/components/splash-screen';
+import { OfflineSyncManager } from '@/components/offline-sync-manager';
 
 NativeSplash.preventAutoHideAsync();
 
@@ -85,6 +86,7 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <AuthProvider>
+        <OfflineSyncManager />
         <AiTutorProvider>
           <MessagesProvider>
             <RootLayoutNav />

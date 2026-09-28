@@ -573,7 +573,7 @@ export default function DashboardScreen() {
             {user?.profile_photo ? (
               <Image source={{ uri: user.profile_photo }} style={styles.avatar} />
             ) : (
-              <View style={[styles.avatar, styles.avatarFallback]}>
+              <View style={[styles.avatar, styles.avatarFallback, { backgroundColor: user?.avatar_color || C.primary }]}>
                 <Text style={styles.avatarInitials}>{initials}</Text>
               </View>
             )}
@@ -590,7 +590,7 @@ export default function DashboardScreen() {
               {user?.profile_photo ? (
                 <Image source={{ uri: user.profile_photo }} style={styles.menuAvatar} />
               ) : (
-                <View style={[styles.menuAvatar, styles.avatarFallback]}>
+                <View style={[styles.menuAvatar, styles.avatarFallback, { backgroundColor: user?.avatar_color || C.primary }]}>
                   <Text style={[styles.avatarInitials, { fontSize: 14 }]}>{initials}</Text>
                 </View>
               )}
