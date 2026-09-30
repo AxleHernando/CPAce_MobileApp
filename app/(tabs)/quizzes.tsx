@@ -19,6 +19,7 @@ import {
   getOfflineBankSubjects,
   refreshOfflineQuestionBankIfStale,
 } from '@/lib/offline-question-bank';
+import { useReconnectRefresh } from '@/lib/reconnect-refresh';
 import { C, sp, r, sh, font, type, grad } from '@/constants/cpace-theme';
 import { ScreenHeader } from '@/components/ui/screen-header';
 import { GradientBorder, GradientButton, GradientFill } from '@/components/ui/gradient';
@@ -82,6 +83,7 @@ export default function QuizzesScreen() {
   }, [user]);
 
   useFocusEffect(useCallback(() => { load(); }, [load]));
+  useReconnectRefresh(load);
 
   useFocusEffect(useCallback(() => {
     (async () => {

@@ -45,6 +45,7 @@ interface QuizRow {
 
 let databasePromise: Promise<SQLite.SQLiteDatabase> | null = null;
 let activeSync: Promise<number> | null = null;
+const syncListeners = new Set<(count: number) => void>();
 
 export async function getOfflineDatabase() {
   if (!databasePromise) {
@@ -329,10 +330,26 @@ async function runPendingQuizSync(userId: number) {
 
 export async function syncPendingQuizzes(userId: number) {
   if (activeSync) return activeSync;
-  activeSync = runPendingQuizSync(userId).finally(() => {
-    activeSync = null;
-  });
+  activeSync = runPendingQuizSync(userId)
+    .then(count => {
+      if (count > 0) {
+        for (const listener of syncListeners) {
+          try { listener(count); } catch {}
+        }
+      }
+      return count;
+    })
+    .finally(() => {
+      activeSync = null;
+    });
   return activeSync;
+}
+
+export function subscribeToOfflineQuizSync(listener: (count: number) => void) {
+  syncListeners.add(listener);
+  return () => {
+    syncListeners.delete(listener);
+  };
 }
 
 export function isNetworkError(error: any) {

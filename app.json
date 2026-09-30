@@ -40,6 +40,15 @@
         }
       ],
       "expo-font",
+      [
+        "expo-asset",
+        {
+          "assets": [
+            "./assets/images/logo-icon.png",
+            "./assets/images/wordmark-cropped.png"
+          ]
+        }
+      ],
       "expo-image",
       "expo-web-browser",
       "expo-status-bar",
